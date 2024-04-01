@@ -98,8 +98,7 @@ class CafeShop:
         user1 = Customer(nameInput)
         print('___________________________________________________')
         user1.sapa()
-        opt = '0'
-        while (opt != '99999'):
+        while True:
             print(f"Menu Warung {self.__name} di alamat {self.__address}")
             print("Pilih pilihan Mu :")
             print("1. Makanan")
@@ -127,14 +126,11 @@ class CafeShop:
         self.__menu_list[0].append(mie_ayam)
         self.__menu_list[0].append(bakso)
         self.__menu_list[0].append(ayam_geprek)
-        opt_1 = '0'
-        while (opt_1 != '9999'):
-            print("Daftar Makanan :")
-            print(f"1. {self.__menu_list[0][0].name} : {self.__menu_list[0][0].price}")
-            print(f"2. {self.__menu_list[0][1].name} : {self.__menu_list[0][1].price}")
-            print(f"3. {self.__menu_list[0][2].name} : {self.__menu_list[0][2].price}")
-            print(f"4. {self.__menu_list[0][3].name} : {self.__menu_list[0][3].price}")
-            print(f"5. {self.__menu_list[0][4].name} : {self.__menu_list[0][4].price}")
+        while True:
+            total_food = Food.totalFoods()
+            print(f"Daftar Makanan sebanyak {total_food}:")
+            for index, food in enumerate(self.__menu_list[0], start=1):
+                print(f"{index}. {food.name} : {food.price}")
             print("6. Kembali")
             order = str(input("Masukkan Pilihan mu :"))
             print('___________________________________________________')
@@ -170,14 +166,11 @@ class CafeShop:
         self.__menu_list[1].append(es_jeruk)
         self.__menu_list[1].append(kopi)
         self.__menu_list[1].append(air_mineral)
-        opt_1 = '0'
-        while (opt_1 != '9999'):
-            print("Daftar Minuman :")
-            print(f"1. {self.__menu_list[1][0].name} : {self.__menu_list[1][0].price}")
-            print(f"2. {self.__menu_list[1][1].name} : {self.__menu_list[1][1].price}")
-            print(f"3. {self.__menu_list[1][2].name} : {self.__menu_list[1][2].price}")
-            print(f"4. {self.__menu_list[1][3].name} : {self.__menu_list[1][3].price}")
-            print(f"5. {self.__menu_list[1][4].name} : {self.__menu_list[1][4].price}")
+        while True:
+            total_drink = Drink.totalDrinks()
+            print(f"Daftar Makanan sebanyak {total_drink}:")
+            for index, drink in enumerate(self.__menu_list[1], start=1):
+                print(f"{index}. {drink.name} : {drink.price}")
             print("6. Kembali")
             order = str(input("Masukkan Pilihan mu :"))
             print('___________________________________________________')
