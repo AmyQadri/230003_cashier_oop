@@ -14,14 +14,14 @@ class Drink:
     
     def getInfo(self):
         level = None
-        if (self.__level == 0):
+        if (self.__level == 1):
             level = "Biasa"
-        elif (self.__level == -1):
-            level = "Hangat"
-        elif (self.__level == -2):
-            level = "Panas"
-        elif (self.__level == 1):
+        elif (self.__level == 2):
             level = "Dingin"
+        elif (self.__level == 3):
+            level = "Hangat"
+        elif (self.__level == 4):
+            level = "Panas"
         else:
             print("Nilai yang anda Masukkan salah")
         self.__total = self.__jumlah * self.__price
@@ -36,16 +36,16 @@ class Drink:
     @property
     def name(self):
         return self.__name
-    
+
     @property
     def total(self):
         self.__total = self.__jumlah * self.__price
         return self.__total
-    
+
     @property
     def price(self):
         return self.__price
-    
+
     def orderInfo(self):
         if (self.__level == 1):
             self.__level = "Biasa"

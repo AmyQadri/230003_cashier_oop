@@ -19,7 +19,7 @@ class CafeShop:
     def addDrinks(self, value):
         self.__menu_list[1].append(value)
 
-    def dilevery():
+    def delivery():
         print('Proccess 20%')
         time.sleep(1)
         print('Proccess 40%')
@@ -29,37 +29,6 @@ class CafeShop:
         print('Proccess 80%')
         time.sleep(1)
         print('Proccess 100%')
-    
-    def drinksSystem(order, userValue):
-        name = order.name
-        print(f"Anda Memesan {name}")
-        print('1. Biasa\n2. Dingin\n3. Hangat\n4. Panas')
-        try:
-            level = int(input('Pilih Level : '))
-            print('___________________________________________________')
-            order.changeLevel(level)
-            try:
-                jumlah = int(input("Berapa banyak yang anda pesan : "))
-                print('___________________________________________________')
-                if (jumlah >= 1):
-                    order.changeTotal(jumlah)
-                    if (userValue.cash() >= order.total):
-                        CafeShop.dilevery()
-                        buying_his = order.total
-                        userValue.buying(buying_his)
-                        order.orderInfo()
-                        userValue.deliveryFoods(order)
-                        print(f"Sisa uang anda : {userValue.cash()}")
-                    else:
-                        print("Uang anda tidak cukup")
-                else:
-                    print('Tidak dapat memesan kurang dari 0')
-            except:
-                print("Printah harus dalam bentuk angka")
-                CafeShop.drinksSystem(order, userValue)
-        except:
-            print("Printah harus dalam bentuk angka")
-            CafeShop.drinksSystem(order, userValue)
 
 
     def foodsSystem(order, userValue):
@@ -76,12 +45,14 @@ class CafeShop:
                 order.changeTotal(jumlah)
                 if (jumlah >= 1):
                     if (userValue.cash() >= order.total):
-                        CafeShop.dilevery()
+                        CafeShop.delivery()
                         buying_his = order.total
                         userValue.buying(buying_his)
                         order.orderInfo()
                         userValue.deliveryFoods(order)
                         print(f"Sisa uang anda : {userValue.cash()}")
+                        order.changeLevel(1)
+                        print('___________________________________________________')
                     else:
                         print("Uang anda tidak cukup")
                 else:
@@ -93,29 +64,41 @@ class CafeShop:
             print("Printah harus dalam bentuk angka")
             CafeShop.foodsSystem(order, userValue)
 
-    def system(self):
-        nameInput = str(input("Masukkan Nama anda : "))
-        user1 = Customer(nameInput)
-        print('___________________________________________________')
-        user1.sapa()
-        while True:
-            print(f"Menu Warung {self.__name} di alamat {self.__address}")
-            print("Pilih pilihan Mu :")
-            print("1. Makanan")
-            print("2. Minuman")
-            print("3. Keluar")
-            opt = str(input("Masukkan Pilihan Anda : "))
-            if (opt == '1' or opt == "Makanan" or opt == "1. Makanan"):
-                self.orderFoods(user1)
-            elif (opt == '2' or opt == "Minuman" or opt == "2. Minuman"):
-                self.orderDrinks(user1)
-            elif (opt == '3' or opt == "Keluar" or opt == "3. Keluar"):
-                print("Anda selesai memesan")
-                break
-            else:
-                print('Pilihan yang anda masukkan salah')
+    def drinksSystem(order, userValue):
+        name = order.name
+        print(f"Anda Memesan {name}")
+        print('1. Biasa\n2. Dingin\n3. Hangat\n4. Panas')
+        try:
+            level = int(input('Pilih Level : '))
+            print('___________________________________________________')
+            order.changeLevel(level)
+            try:
+                jumlah = int(input("Berapa banyak yang anda pesan : "))
+                print('___________________________________________________')
+                order.changeTotal(jumlah)
+                if (jumlah >= 1):
+                    if (userValue.cash() >= order.total):
+                        CafeShop.delivery()
+                        buying_his = order.total
+                        userValue.buying(buying_his)
+                        order.orderInfo()
+                        userValue.deliveryDrinks(order)
+                        print(f"Sisa uang anda : {userValue.cash()}")
+                        order.changeLevel(1)
+                        print('___________________________________________________')
+                    else:
+                        print("Uang anda tidak cukup")
+                else:
+                    print('Tidak dapat memesan kurang dari 0')
+            except:
+                print("Printah harus dalam bentuk angka")
+                CafeShop.foodsSystem(order, userValue)
+        except:
+            print("Printah harus dalam bentuk angka")
+            CafeShop.foodsSystem(order, userValue)
 
-    def orderFoods(self, userValue):
+            
+    def system(self):
         nasi_goreng = Food("Nasi Goreng", 25000)
         seblak = Food("Seblak", 15000)
         mie_ayam = Food("Mie Ayam", 14000)
@@ -126,6 +109,38 @@ class CafeShop:
         self.__menu_list[0].append(mie_ayam)
         self.__menu_list[0].append(bakso)
         self.__menu_list[0].append(ayam_geprek)
+        teh_manis = Drink("Teh Manis", 5000)
+        jus_alpukat = Drink("Jus Alpukat", 12000)
+        es_jeruk = Drink("Es Jeruk", 6000)
+        kopi = Drink("Kopi", 12000)
+        air_mineral = Drink("Air Mineral", 4000)
+        self.__menu_list[1].append(teh_manis)
+        self.__menu_list[1].append(jus_alpukat)
+        self.__menu_list[1].append(es_jeruk)
+        self.__menu_list[1].append(kopi)
+        self.__menu_list[1].append(air_mineral)
+        nameInput = str(input("Masukkan Nama anda : "))
+        user = Customer(nameInput)
+        print('___________________________________________________')
+        user.sapa()
+        while True:
+            print(f"Menu Warung {self.__name} di alamat {self.__address}")
+            print("Pilih pilihan Mu :")
+            print("1. Makanan")
+            print("2. Minuman")
+            print("3. Keluar")
+            opt = str(input("Masukkan Pilihan Anda : "))
+            if (opt == '1' or opt == "Makanan" or opt == "1. Makanan"):
+                self.orderFoods(user)
+            elif (opt == '2' or opt == "Minuman" or opt == "2. Minuman"):
+                self.orderDrinks(user)
+            elif (opt == '3' or opt == "Keluar" or opt == "3. Keluar"):
+                print("Anda selesai memesan")
+                break
+            else:
+                print('Pilihan yang anda masukkan salah')
+
+    def orderFoods(self, userValue):
         while True:
             total_food = Food.totalFoods()
             print(f"Daftar Makanan sebanyak {total_food}:")
@@ -153,22 +168,11 @@ class CafeShop:
                 break
             else:
                 print("Opsi Yang anda masukkan Salah")
-                self.orderFoods(userValue)
 
     def orderDrinks(self, userValue):
-        teh_manis = Drink("Teh Manis", 5000)
-        jus_alpukat = Drink("Jus Alpukat", 12000)
-        es_jeruk = Drink("Es Jeruk", 6000)
-        kopi = Drink("Kopi", 12000)
-        air_mineral = Drink("Air Mineral", 4000)
-        self.__menu_list[1].append(teh_manis)
-        self.__menu_list[1].append(jus_alpukat)
-        self.__menu_list[1].append(es_jeruk)
-        self.__menu_list[1].append(kopi)
-        self.__menu_list[1].append(air_mineral)
         while True:
             total_drink = Drink.totalDrinks()
-            print(f"Daftar Makanan sebanyak {total_drink}:")
+            print(f"Daftar Minuman sebanyak {total_drink}:")
             for index, drink in enumerate(self.__menu_list[1], start=1):
                 print(f"{index}. {drink.name} : {drink.price}")
             print("6. Kembali")
@@ -177,23 +181,22 @@ class CafeShop:
             if (order == '1' or order == 'Teh Manis' or order == '1. Teh Manis'):
                 order = self.__menu_list[1][0]
                 CafeShop.drinksSystem(order, userValue)
-            if (order == '2' or order == 'Jus Alpukat' or order == '2. Jus Alpukat'):
+            elif (order == '2' or order == 'Jus Alpukat' or order == '2. Jus Alpukat'):
                 order = self.__menu_list[1][1]
                 CafeShop.drinksSystem(order, userValue)
-            if (order == '3' or order == 'Es Jeruk' or order == '3. Es Jeruk'):
+            elif (order == '3' or order == 'Es Jeruk' or order == '3. Es Jeruk'):
                 order = self.__menu_list[1][2]
                 CafeShop.drinksSystem(order, userValue)
-            if (order == '4' or order == 'Kopi' or order == '4. Kopi'):
+            elif (order == '4' or order == 'Kopi' or order == '4. Kopi'):
                 order = self.__menu_list[1][3]
                 CafeShop.drinksSystem(order, userValue)
-            if (order == '5' or order == 'Air Mineral' or order == '5. Air Mineral'):
+            elif (order == '5' or order == 'Air Mineral' or order == '5. Air Mineral'):
                 order = self.__menu_list[1][4]
                 CafeShop.drinksSystem(order, userValue)
             elif (order == '6'):
                 break
             else:
                 print("Opsi Yang anda masukkan Salah")
-                self.orderDrinks(userValue)
-                
+            
 iqbal = CafeShop("Toko Iqbal", "Jalan Cumi-Cumi")
 iqbal.system()

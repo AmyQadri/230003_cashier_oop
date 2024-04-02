@@ -14,9 +14,9 @@ class Food:
     
     def getInfo(self):
         level = None
-        if (self.__level == 0):
+        if (self.__level == 1):
             level = "Biasa"
-        elif (self.__level == 1):
+        elif (self.__level == 2):
             level = "Pedas"
         else:
             print("Nilai yang anda Masukkan salah")
@@ -46,7 +46,7 @@ class Food:
         if (self.__level == 1):
             self.__level = "Biasa"
         elif (self.__level == 2):
-            self.__level = "Pedis"
+            self.__level = "Pedas"
         else:
             print("Terdapat Error pada pilihan")
         self.__total = self.__jumlah * self.__price
